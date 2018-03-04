@@ -2,9 +2,9 @@ TODO应用  --易计划
 ========
 使用的技术介绍
 --------
-前端:NEJ+flex
-后台：nodeJs+express
-数据库：mongoDB
+前端:NEJ+flex<br/>
+后台：nodeJs+express<br/>
+数据库：mongoDB<br/>
 
 >其中删除了data目录（数据库所在）
 
