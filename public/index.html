@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>易计划-TODO</title>
+    <meta charset="utf-8"/>
+    <script src="./js/nej/src/define.js?pro=./"></script>
+    <link rel="stylesheet" type="text/css" href="css/lib/font_awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pro/main.css"/>
+    <script type="text/javascript">
+        var itemShowNum=4,frontIndex=0,pageMax=2;
+        var globalPageManager={'短期':1,'长期':1};
+        var changeArr=[],gChooseArr={'短期':'短期_all','长期':'长期_all'};
+        var globalTempDate,tokenId='',localData={},timer,searchFlag=false,searchData,globalCryptoId;
+    </script>
+  </head>
+  <body>
+<!--登录/注册 -->
+    <div id='floatDiv'>
+        <div id="loginTip">
+            <i class='fa fa-odnoklassniki' id="login" title='登录'>登录</i>
+        </div>
+        <div id="loginDiv">
+            <div id="loginContent">
+                <div id='loginTitle'>
+                     <img src="images/logo.png" id="loginIcon">
+                </div>
+                <div id='loginBody'>
+                    <div id="usernameDiv"><input id="username" placeholder="用户名" /><i class='fa fa-user-md icon-control' id='userIcon'></i></div>
+                    <div id="passwordDiv"><input id="password" placeholder="密码" /><i class='fa fa-unlock-alt ' id='passwordIcon'></i></div>
+                    <input id="submit" type="button" value="登    录" />
+                </div>
+                <div id="loginFooter">
+                    <span id='register'>去注册</span>
+                    <span id='registerTip'>注册成功</span>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 信息提示以及数据状态标识 -->
+    <div id='headerDiv'>
+        &nbsp;<i class="fa fa-toggle-off" id='dataStatus' title='离线状态'>&nbsp;离线</i><span></span>
+    </div>    
+    <div id='tipInfo'>
+        <i class='fa fa-cloud-download infoIcon'></i><span>数据同步完成</span>
+    </div>
+    <div id='infoTip'>
+       <div id='infoContainer'>
+            <i class='fa fa-info-circle infoIcon'></i>
+            <div id='infoMessage'></div>
+        </div>            
+    </div>
+<!-- 搜索框等头部信息 -->
+    <div id="titleDiv">
+      <h1 id="proName">易计划</h1>
+      <div class="addItem">
+          <div class="searchColumn">
+             <input id="todoThing" placeholder="任务内容" autofocus><span class="fa fa-edit icon-control"></span>
+          </div>
+          <div>
+                <i class="fa fa-search" id="searchTODO" title="搜索"></i><span id='showAll'>&nbsp;<i class='fa fa-reply-all' style="font-size:25px;" title="显示全部"></i></span>
+          </div>  
+      </div>
+      <div id="categoryChoose">
+          <i class="fa fa-check-circle-o changeRadio" name='短期'>&nbsp;短期任务</i>
+          <i class="fa fa-circle-o changeRadio" name='长期'>&nbsp;长期任务</i>
+      </div>
+    </div> 
+<!-- TODO记录列表 -->
+    <div id="containerDiv">
+        {if !defined("category")}               
+        <textarea name="jst" id="jst-template-1">
+        {for cName in category}
+                    <div class="categoryDiv">   
+                        <span class="categoryName" {if cName_key=='短期'}style="background:pink";{else}style="background:#7EC0EE";{/if} >${cName_key}_<i style="font-family:'Times New Roman',Georgia,Serif;font-size:15px">{if cName_key=='短期'}urgent task{else}common task{/if}</i></span> 
+                        <span class="hr0" ></span>
+                        {var count=0,left=0} 
+                        {for itemType in cName}
+                            {list itemType as item}                               
+                                <span style="display:hidden" value=${count++}></span>
+                                <div class="infoColumn ${cName_key}_${itemType_key}" {if item==''}style="display:none";${count--}{/if} {if count<=(globalPageManager[cName_key]-1)*itemShowNum||count>((globalPageManager[cName_key]-1)*itemShowNum+itemShowNum)} style="display:none"{/if}{if itemType_key=='top'}style="background:#FFFFE0" {/if}{if (itemType_key=='toDo'||itemType_key=='top')&&item!=''}${left++}{/if}  >
+                                    <i {if itemType_key=='complete'} class="fa fa-check-square-o icon-control-infoText choose" {else} class="fa fa-square-o icon-control-infoText choose" {/if} name='${cName_key}_${itemType_key}_${item_index}' style="color:#D8D8D8" title='勾选完成'></i>&nbsp;
+                                    <input class="infoText" name='${cName_key}_${itemType_key}_${item_index}' value='${item["message"]}' disabled {if itemType_key=='complete'} style="text-decoration:line-through;color:#D9D9D9"{/if}{if itemType_key=='top'}style="background:#FFFFE0" {/if} title='双击编辑' />
+                                    <span style='width:100px;font-size:12px;vertical-align:middle' title='创建时间'>${item["time"]}</span>
+                                    {if itemType_key=='top'}
+                                        <span class="fa fa-star itemStar" name='${cName_key}_${itemType_key}_${item_index}' title='取消置顶'></span>
+                                    {elseif itemType_key=='toDo'}
+                                        <span class="fa fa-star-o itemStar" name='${cName_key}_${itemType_key}_${item_index}' title='置顶'></span>
+                                    {/if}
+                                    <span class="fa fa-remove infoTextRemove" name='${cName_key}_${itemType_key}_${item_index}' title='删除'></span>
+                                </div>
+                               
+                            {/list}   
+                        {/for}                    
+                        <span class="hr0" ></span>
+                        <div class="categoryBottom">
+                            <span class="fontStyle" id="${cName_key}_num" style='font-size:14px;'>
+                                {if Object.keys(gChooseArr).length==0||gChooseArr[cName_key].split('_')[1]=='all'}
+                                    ${count}&nbsp;/&nbsp;${left}
+                                {else}
+                                    ${count}&nbsp;条记录
+                                {/if}
+                            </span>
+                            {if count>itemShowNum}
+                            <div class="changePage">
+                                {if globalPageManager[cName_key]==1}
+                                    <span style="font-size:8px;width: 40px;color:#CDCDC1">首页</span>&nbsp;&nbsp;
+                                {else}
+                                    <span class="fa fa-angle-double-left changePageIcon ${cName_key}_front"></span>&nbsp;&nbsp;
+                                {/if}
+                                {if globalPageManager[cName_key]==pageMax}
+                                    <span style="font-size:8px;margin-left:-18px;color:#CDCDC1" >尾页</span>
+                                {else}
+                                    <span class="fa fa-angle-double-right changePageIcon ${cName_key}_end" ></span>
+                                {/if}
+                            </div>
+                            {/if}
+                            <div class="categoryButtons" id='${cName_key}'>
+                                <button class="categoryButton change" name='${cName_key}' id='${cName_key}_all'>全部</button>   
+                                <button class="categoryButton change" name='${cName_key}_complete' id='${cName_key}_complete'>待完成</button>   
+                                <button class="categoryButton change" name='${cName_key}_toDo' id='${cName_key}_toDo'>已完成</button>              
+                            </div>
+                        </div>
+                    </div>                                         
+            {/for}  
+            </textarea>
+        {/if}
+    </div>
+    <script type="text/javascript" src='js/pro/tool.js'></script>
+    <script type="text/javascript" src='js/pro/index.js'></script>
+  </body>
+</html>
