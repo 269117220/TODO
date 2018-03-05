@@ -243,7 +243,7 @@ var f=function(_t){
                             }
                         }
                         if(flag){
-                            if(Object.keys(_json.TODO).length)
+                            if(Object.keys(JSON.parse(_json.TODO)).length)
                                 data=JSON.parse(_json.TODO);
                         }
                         setHtml(data);
@@ -252,11 +252,7 @@ var f=function(_t){
                         /*界面样式修改*/
                         var login=_e._$get("login");
                         login.click();           
-                        var tipInfo=_e._$get("tipInfo");
-                        tipInfo.style.backgroundColor='#DFF0D8';
-                        tipInfo.style.color='#46763D';
-                        tipInfo.childNodes[2].innerHTML='数据同步完成';
-                        tipInfo.style.marginTop='0';
+                        infoTip(true,'数据同步完成');
                         var loginDiv=_e._$get("loginDiv");
                             loginDiv.style.display='none';
                         changeClass(login,'fa-odnoklassniki','fa-sign-out');
@@ -268,7 +264,6 @@ var f=function(_t){
                         dataStatus.style.color='green';
                         setTimeout(()=>{
                             changeClass(dataStatus,'fa-toggle-off','fa-toggle-on');
-                            tipInfo.style.marginTop='-37px';
                         }, 2000);
                     }else if(_json.code==0){
                        infoTip(true,'用户名/密码错误');
