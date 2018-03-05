@@ -107,7 +107,7 @@ var f=function(_t){
                     if(_json.code==1){
                          infoTip(false,message);
                     }else if(_json.code==0){
-                         infoTip(true,message);
+                         infoTip(true,'操作失败');
                     }
                 }
             })
@@ -245,6 +245,7 @@ var f=function(_t){
                         if(flag){
                             if(Object.keys(JSON.parse(_json.TODO)).length)
                                 data=JSON.parse(_json.TODO);
+                            infoTip(false,'数据同步完成');
                         }
                         setHtml(data);
                         globalTempDate=JSON.parse(JSON.stringify(data));
@@ -252,7 +253,6 @@ var f=function(_t){
                         /*界面样式修改*/
                         var login=_e._$get("login");
                         login.click();           
-                        infoTip(true,'数据同步完成');
                         var loginDiv=_e._$get("loginDiv");
                             loginDiv.style.display='none';
                         changeClass(login,'fa-odnoklassniki','fa-sign-out');
