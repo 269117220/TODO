@@ -5,6 +5,10 @@
         overflow-x:hidden; 
     	margin:auto;
     	background: #F8F8FF;
+        -moz-user-select:none; /*火狐*/
+        -webkit-user-select:none; /*webkit浏览器*/
+        -ms-user-select:none; /*IE10*/
+        user-select:none;
     }
     #infoTip{
         position: absolute;
@@ -142,7 +146,7 @@
       font-size: 13px;
       cursor: pointer;
     }
-    #tipInfo{
+/*    #tipInfo{
         position: absolute;
         display: flex;
         flex-direction:row;
@@ -152,12 +156,13 @@
         height: 25px;
         width: 60%;
         padding:6px 15px;
-        margin-top: -37px;
+        top: -37px;
         font-weight: bold;
         background-color: #7CCD7C;
         transition: margin 2s;
         -webkit-transition: margin 2s; 
-    }
+        z-index: 100;
+    }*/
     #headerDiv{
         height: 40px;
         width: 100%;
@@ -286,6 +291,7 @@
     	font-size: 20px;
         background: #FFF;
         height: 90%;
+        cursor: default;
     }    
     .itemStar{
         color:#cc5d5d;
