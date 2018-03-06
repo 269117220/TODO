@@ -500,6 +500,9 @@ var f=function(_t){
                  }
             },this); 
             var newMeaasge={'message':addItemInfo,'time':getCurrTime()};
+            for(var cName in gChooseArr)
+                gChooseArr[cName]=cName+'_all';            
+            gChooseArr[chooseName]=chooseName+'_all';            
             /*如果相关类别不存在，则进行初始化*/
             if(!data[chooseName]){
                 data[chooseName]={'top':[],
@@ -510,7 +513,6 @@ var f=function(_t){
                 globalTempDate=JSON.parse(JSON.stringify(data));
                 /*首次展示的情况*/
                 setHtml(data);
-                gChooseArr[chooseName]=chooseName+'_all';            
             }else{
                 data[chooseName]['toDo'].unshift(newMeaasge);
                 globalTempDate=JSON.parse(JSON.stringify(data));
