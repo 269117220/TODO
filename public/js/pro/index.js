@@ -241,7 +241,8 @@ var f = function f(_t) {
                             }
                         }
                         if (flag) {
-                            if (Object.keys(JSON.parse(_json.TODO)).length) data = JSON.parse(_json.TODO);
+                            if (Object.keys(_json.TODO).length) 
+                                data = _json.TODO;
                             infoTip(false, '数据同步完成');
                         }
                         setHtml(data);

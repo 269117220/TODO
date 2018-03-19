@@ -73,7 +73,7 @@ router
         collection.find({},function(e, docs) {
             docs.forEach((todoItem,index)=>{
                 if(todoItem._id==id){
-                    collection.update(todoItem,{"$set" : {"TODO" :todo}}, function(err, doc) {
+                    collection.update(todoItem,{"$set" : {"TODO" :JSON.parse(todo)}}, function(err, doc) {
                             if (err) {
                                 res.send(_json);
                             } else {
