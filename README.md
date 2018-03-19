@@ -1,6 +1,6 @@
 TODO应用  --易计划
 ========
-<B style='color:blue'>访问地址:</B><a>http://202.197.66.88/</a>
+<B style='color:blue'>访问地址:</B><a target="blank">http://202.197.66.88/</a>
 
 使用的技术介绍
 --------
