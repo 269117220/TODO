@@ -335,6 +335,7 @@
     }    
     .changePageIcon:hover{
         font-size: 20px;
+        cursor: pointer;
     }    
     .categoryButtons{
         display: flex;
@@ -350,6 +351,8 @@
     	font-size: 15px;
         font-weight: bold;
         background:  #FFFFFF;
+        line-height: 30px;
+        vertical-align: middle;
     }
     .categoryButton:hover{
         border-radius: 4px;
