@@ -217,6 +217,9 @@
         margin-left: 20px;
         width:300px;
     }
+    .choose{
+    	cursor: default;
+    }
     .icon-control{
     	order:0;
     	width:50px;
@@ -304,11 +307,12 @@
         font-size: 18px;
         display: none;
         width:14px;
-    }    
-    .infoColumn:hover .itemStar{
-        display: inline-block;
-    }    
-    .infoColumn:hover .infoTextRemove{
+    }   
+    .itemStar:hover,.infoTextRemove:hover{
+    	font-size: 22px;
+    	cursor: pointer;
+    }
+    .infoColumn:hover .itemStar,.infoColumn:hover .infoTextRemove{
         display: inline-block;
     }
     .categoryBottom{
